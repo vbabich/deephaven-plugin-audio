@@ -76,18 +76,17 @@ See the [plug-in documentation](https://deephaven.io/core/docs/how-to-guides/use
 Once the Deephaven server is running, the plugin should be available to use.
 
 ```python
+from deephaven import ui
 from deephaven_plugin_audio import DeephavenPluginAudioObject
 
-obj = DeephavenPluginAudioObject()
+@ui.component
+def demo():
+    sound = DeephavenPluginAudioObject('https://codeskulptor-demos.commondatastorage.googleapis.com/pang/pop.mp3')
+
+    return [sound, ui.action_button('Play sound', on_press=lambda: sound.play())]
+
+panel = demo()
 ```
-
-A panel should appear. You can now use the object to send messages to the client.
-
-```python
-obj.send_message("Hello, world!")
-```
-
-The panel can also send messages back to the Python client by using the input field.
 
 ## Distributing the Plugin
 To distribute the plugin, you can upload the wheel file to a package repository, such as [PyPI](https://pypi.org/).
